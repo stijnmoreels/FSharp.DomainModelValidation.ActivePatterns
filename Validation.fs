@@ -12,9 +12,9 @@ let (|StringLength|_|) f s =
     f (String.length s) 
     |> try' StringLength
 
-let (|Matches|_|) pattern s = 
+let (|NotMatches|_|) pattern s = 
     Regex.IsMatch (pattern, s, RegexOptions.Compiled) 
-    |> try' Matches
+    |> try' NotMatches
 
 let flip f x y = f y x
 
@@ -35,7 +35,7 @@ let (|CheckSum|_|) s =
 let isbn13 = function
     | NullOrEmpty 
     | StringLength ((<>) 13)
-    | Matches "[0-9]{13}" 
+    | NotMatches "[0-9]{13}" 
     | CheckSum -> None
     | s -> ISBN13 s |> Some
 
